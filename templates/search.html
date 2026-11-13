@@ -1,0 +1,90 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto p-8">
+
+    <h1 class="text-3xl font-bold mb-6">
+        Pencarian Mahasiswa
+    </h1>
+
+    <!-- Form Pencarian -->
+    <form action="/search" method="GET" class="flex gap-3 mb-6">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ keyword }}"
+            placeholder="Cari nama mahasiswa..."
+            class="border border-gray-300 rounded-lg p-3 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+
+        <button
+            type="submit"
+            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+            Cari
+        </button>
+
+    </form>
+
+    <!-- Hasil Pencarian -->
+    {% if mahasiswa %}
+
+        <h2 class="text-xl font-bold mb-4">
+            Hasil Pencarian
+        </h2>
+
+        {% for m in mahasiswa %}
+
+            <div class="bg-white p-5 rounded-lg shadow mb-3">
+
+                <p><strong>NIM:</strong> {{ m.nim }}</p>
+                <p><strong>Nama:</strong> {{ m.nama }}</p>
+                <p><strong>Prodi:</strong> {{ m.prodi }}</p>
+                <p><strong>Fakultas:</strong> {{ m.fakultas }}</p>
+
+            </div>
+
+        {% endfor %}
+
+        <!-- Navigasi Pagination -->
+        <div class="flex justify-between items-center mt-6">
+
+            {% if page > 1 %}
+
+                <a
+                    href="{{ url_for('search', q=keyword, page=page-1) }}"
+                    class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                    Previous
+                </a>
+
+            {% else %}
+
+                <span></span>
+
+            {% endif %}
+
+            <span class="font-semibold">
+                Halaman {{ page }}
+            </span>
+
+            <a
+                href="{{ url_for('search', q=keyword, page=page+1) }}"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Next
+            </a>
+
+        </div>
+
+    {% elif keyword %}
+
+        <p class="text-red-500 mt-6">
+            Mahasiswa tidak ditemukan.
+        </p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
