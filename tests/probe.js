@@ -11,7 +11,7 @@ export const options = {
 };
 
 export default function () {
-    const res = http.get('http://127.0.0.1:5000/search?q=Andi');
+    const res = http.get('http://172.25.192.1:5000/search?q=Andi');
 
     check(res, {
         'probe status is 200': (r) => r.status === 200,

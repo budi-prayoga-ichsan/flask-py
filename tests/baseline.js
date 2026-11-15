@@ -6,12 +6,12 @@ import { Trend } from 'k6/metrics';
 const responseTime = new Trend('response_time_custom');
 
 export const options = {
-    vus: 200,
+    vus: 450,
     duration: '30s',
 };
 
 export default function () {
-    const res = http.get('http://127.0.0.1:5000/search?q=Andi');
+    const res = http.get('http://172.25.192.1:5000/search?q=Andi');
 
     check(res, {
         'status is 200': (r) => r.status === 200,
